@@ -1,0 +1,46 @@
+{
+    "name": "fastai-snippets",
+    "displayName": "Fastai Snippets",
+    "description": "Fastai Snippets for Visual Studio Code",
+    "version": "0.1.0",
+    "publisher": "SBSnippets",
+    "author": {
+        "name": "Sven Becker",
+        "email": "SvenBecker19@gmail.com"
+    },
+    "icon": "images/pytorch-logo.png",
+    "galleryBanner": {
+        "color": "#fbfbfb",
+        "theme": "light"
+    },
+    "keywords": [
+        "fastai",
+        "pytorch",
+        "python",
+        "examples",
+        "snippet"
+    ],
+    "bugs": {
+        "url": "https://github.com/SvenBecker/vscode-fastai/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SvenBecker/vscode-fastai.git"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/SvenBecker/vscode-fastai/blob/master/README.md",
+    "engines": {
+        "vscode": "^1.25.0"
+    },
+    "categories": [
+        "Snippets"
+    ],
+    "contributes": {
+        "snippets": [
+            {
+                "language": "python",
+                "path": "./snippets/fastai.json"
+            }
+        ]
+    }
+}
