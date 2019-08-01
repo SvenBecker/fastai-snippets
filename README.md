@@ -1,4 +1,4 @@
-# PyTorch Code Snippets for VSCode
+# Fastai Code Snippets for VSCode
 
 [![VSMarketplace](https://vsmarketplacebadge.apphb.com/version-short/SBSnippets.fastai-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=SBSnippets.fastai-snippets)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs/SBSnippets.pytorch-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=SBSnippets.fastai-snippets)
@@ -35,16 +35,20 @@ Currently the snippets are working for the latest releases of the supported libr
 * fastai >= 1.0.55
 
 >__Note__:
->Be aware that at the time the fastai library is changing rapidly, so I can not guarantee that every snippet is actually working the way it is intended.
->I will try to keep the snippets in line with the latest fastai library developments (as well as the latest PyTorch releases), so it might not work for you in case you are using an _outdated_ version.
+>Be aware that at the time the fastai library is changing rapidly and currently this project is work in progress.
+>I will try to keep the snippets in line with the latest fastai library developments, so it might not work for you in case you are using an _outdated_ version.
+>There might be some functionality which doesn't work yet. I will try to fix it as soon as possible. Furthermore it would be appreciated to inform me about bugs or any other issues.
 
 ## <a name="installation" > </a> Installation
+
+>__Warning__:
+>I haven't uploaded this project to the vscode marketplace. Will be done soon.
 
 The installation process is very straightforward. The recommend, stable way is as follows:
 
 1. Launch Visual Studio Code
 2. From the command palette `Ctrl-Shift-P` (Windows, Linux) or `Cmd-Shift-P` (MacOS) select `Install Extension` or just simply go to the `Extensions` tab (most likely the fifth entry on the left sidebar). You can also use the hotkey `Ctrl-Shift-X` respectifely `Cmd-Shift-X`
-3. Type `PyTorch Snippets`
+3. Type `Fastai Snippets`
 4. Choose and install extension
 5. Restart/Reload Visual Studio Code
 
@@ -53,7 +57,7 @@ Alternatively you can also clone this repository and move it manually into your 
 the most recent version on GitHub.
 
 ```sh
-git clone https://github.com/SvenBecker/vscode-pytorch.git
+git clone https://github.com/SvenBecker/vscode-fastai.git
 mv vscode-pytorch /path/to/your/VSCodeExtensionFolder/
 ```
 
@@ -64,46 +68,11 @@ On Windows for example you can normally find the extension folder at `C:\Users\Y
 
 ## <a name="changelog" > </a> Changelog
 
-#### Version 0.2.3:
+#### Version 0.1.0:
 
 ##### Added
 
-- Added two new snippets `pytorch:dataset` and `ignite_metrics`
-
-#### Version 0.2.2:
-
-##### Added
-
-- Added DataBlock API support for tabular data `fastai:tabular:datablock`
-
-##### Changed
-
-- Changed `train` snippets for PyTorch and fastai
-
-##### Fixed
-
-- Fixed bugs in optimizer selection
-
-#### Version 0.2.1:
-
-##### Added
-
-- Added PyTorch Functional Snippets `pytorch:F:`
-
-#### Version 0.2.0:
-
-##### Added
-
-- Added code snippets for fast metrics or loss selection (PyTorch and fastai)
-- Added easy selection of neural network layers in PyTorch based on their type `pytorch:layer:` (conv, recurrent, etc.)
-- Added some more PyTorch snippets like for example optimizer selection, weight initialization etc.
-- Added DataBlock API snippets for fastai
-
-##### Changes
-
-- Changed some code examples for common problems to be inline with the official examples provided by PyTorch
-  
-All of the past as well as the upcoming changes can further be viewed at [Changelog](CHANGELOG.md).
+- First release
 
 ## <a name="involved" > </a> Get Involved
 
@@ -114,12 +83,7 @@ and there is still so much to do, please take a look at [Contributing](CONTRIBUT
 
 ### <a name="plans" > </a> Future Plans
 
-I would like to extend snippet options to additional packages which are related to PyTorch.
-This might include [Ignite](https://github.com/pytorch/ignite) or [Pyro](https://github.com/uber/pyro).
-
-Furthermore, but not in this project, I would like to offer VS Code snippets for visualization in Python, like for
-example [Matplotlib](https://matplotlib.org/api/pyplot_api.html) or [Seaborn](https://seaborn.pydata.org/). Eventually even considering the inclusion of interactive visualization libraries like [Bokeh](https://bokeh.pydata.org/en/latest/) or [Plotly](https://plot.ly/). If anyone is interested in this kind of project and/or want to offer some help please
-[contact](#contact) me.
+I'm still trying to get all the new updates. Have been quit busy so I didn't paid much attention to the fastai library changes.
 
 ### <a name="contact" > </a> Contact
 
@@ -127,6 +91,5 @@ Suggestions for improvements will be highly appreciated. You can write me an ema
 
 ## <a name="credits" > </a> Credits
 
-* [PyTorch](https://pytorch.org/): A huge thanks to the PyTorch team for building such an awesome, easy to use deep learning framework and for offering a numerous amount of code examples.
 * [Fastai](https://www.fast.ai/): Also a huge thanks to Jeremy Howard and the whole fast.ai team for creating this great deep learning library and also for offering wonderful, very practical orientated free lectures giving insight to deep learning to a wide range of people including ml/dl beginners as well as advanced practitioners.
 * [VSCode](https://code.visualstudio.com/): My personal favorite text editor and I'm grateful for all the options they are offering, like a huge amount of language support, extensions, integrated terminal, debugger etc..

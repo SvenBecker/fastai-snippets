@@ -18,7 +18,7 @@ Full collection of supported code snippets for the PyTorch and Fastai library. `
 
 | Trigger                    | Content                                                                            |
 | -------------------------- | ---------------------------------------------------------------------------------- |
-| `fastai:train→`            | creates a two step training process                                                |
+| `fastai:fit→`              | creates a simple fit function                                                      |
 | `fastai:train_2s→`         | creates a two step model training template                                         |
 | `fastai:optimizer→`        | selection of an optimizer (same as in pytorch)                                     |
 | `fastai:metric→`           | creates a template for a custom metric                                             |

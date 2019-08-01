@@ -3,45 +3,64 @@
         "prefix": "fastai:train_2s",
         "description": "Two stage training template",
         "body": [
-            "learn.${1|fit,fit_one_cycle|}(${2:5}, ${3:5e-3})",
-            "learn.save('stage-1')",
+            "${1:learn}.${2|fit,fit_one_cycle|}(${3:5}, ${4:5e-3})",
+            "${1:learn}.save('stage-1')",
             "",
-            "learn.lr_find()",
-            "learn.recorder.plot()",
+            "${1:learn}.lr_find()",
+            "${1:learn}.recorder.plot()",
             "",
-            "learn.unfreeze()",
-            "learn.${4|fit,fit_one_cycle|}(${5:5}, ${6:slice(1e-3 / 2.6**4 ,1e-3}))",
-            "learn.save('stage-2')"
+            "${1:learn}.unfreeze()",
+            "${1:learn}.${5|fit,fit_one_cycle|}(${6:5}, ${7:slice(1e-3 / 2.6**4 ,1e-3}))",
+            "${1:learn}.save('stage-2')"
         ]
     },
-    "Train": {
-        "prefix": "fastai:train",
+    "Fit": {
+        "prefix": "fastai:fit",
         "description": "Fit function",
         "body": [
-            "learn.${1|fit,fit_one_cycle|}(${2:5}, ${3:1e-3})"
+            "${1:learn}.${2|fit,fit_one_cycle|}(${3:1}, ${4:1e-3})"
         ]
     },
-    "Metric Template": {
-        "prefix": "fastai:metric",
-        "desription": "Creates a metric function template",
+    "Predict": {
+        "prefix": "fastai:predict",
+        "description": "Get a prediction",
         "body": [
-            "def ${1:metric}(pred: Tensor, targ: Tensor):",
-            "\t# Computes the ${1:metric} between `pred` an `targ`",
-            "\treturn"
+            "${1:learn}.${2|predict,get_preds,pred_batch|}($3)"
+        ]
+    },
+    "Validate": {
+        "prefix": "fastai:validate",
+        "description": "Make a validation",
+        "body": [
+            "${1:learn}.validate(dl=${2:None}, callbacks=${3:None}, metrics=${4:None})"
+        ]
+    },
+    "DataBunch": {
+        "prefix": "fastai:databunch",
+        "description": "Load a saved DataBunch from path/file",
+        "body": [
+            "${1:data} = load_data(${2:path}, file=${3:'data_save.pkl'}, bs=${4:64})"
+        ]
+    },
+    "Callback": {
+        "prefix": "fastai:callback",
+        "description": "Select a callback",
+        "body": [
+            "${1|CSVLogger,TerminateOnNaNCallback,EarlyStoppingCallback,SaveModelCallback,ReduceLROnPlateauCallback|}"
         ]
     },
     "Regression Metrics": {
         "prefix": "fastai:metric_reg",
         "desription": "Adds a regression metrics",
         "body": [
-            "metrics = [${1|exp_rmspe|}]"
+            "metrics = [${1|mse,mae,msle,psnr,R2Score(),ExplainedVariance(),RMSE(),ExpRMSPE()|}]"
         ]
     },
     "Classification Metrics": {
         "prefix": "fastai:metric_class",
         "desription": "Adds a classification metrics",
         "body": [
-            "metrics = [${1|accuracy,accuracy_thresh,dice,error_rate,fbeta|}]"
+            "metrics = [${1|accuracy,accuracy_thresh,op_k_accuracy,dice,error_rate,fbeta,FBeta(average='binary'),Precision(average='binary'),Recall(average='binary'),KappaScore(weights=None),MatthewsCorreff(),AUROC()|}]"
         ]
     },
     "Classification Loss": {
@@ -69,7 +88,7 @@
         "prefix": "fastai:download-dataset",
         "desription": "Select a data set to download or to import, if it is already available",
         "body":[
-            "path = untar_data(URLS.${1|LOCAL_PATH,S3,S3_IMAGE,S3_IMAGELOC,S3_NLP,S3_COCO,S3_MODEL,COCO_SAMPLE,COCO_TINY,MNIST_SAMPLE,MNIST_TINY,IMDB,IMDB_SAMPLE,HUMAN_NUMBERS,ADULT_SAMPLE,ML_SAMPLE,PLANET_SAMPLE,PLANET_TINY,CIFAR,WT103,DOGS,PETS,MNIST,CAMVID,CAMVID_TINY|}, fname=${2:None}, dest=${3:None}, data=${4|True,False|})"
+            "path = untar_data(URLS.${1|BIWI_SAMPLE,COCO_SAMPLE,COCO_TINY,MNIST_SAMPLE,MNIST_TINY,MNIST_VAR_SIZE_TINY,IMDB,IMDB_SAMPLE,HUMAN_NUMBERS,ADULT_SAMPLE,ML_SAMPLE,PLANET_SAMPLE,PLANET_TINY,IMAGENETTE,IMAGENETTE_160,IMAGENETTE_320,IMAGEWOOF,IMAGEWOOF_160,IMAGEWOOF_320,CIFAR,WT103,DOGS,CALTECH_101,CARS,CIFAR_100,CUB_200_2011,FLOWERS,FOOD,PETS,MNIST,AG_NEWS,AMAZON_REVIEWS,AMAZON_REVIEWS_POLARITY,DBPEDIA,MT_ENG_FRA,SOGOU_NEWS,WIKITEXT,WIKITEXT_TINY,YAHOO_ANSWERS,YELP_REVIEWS,YELP_REVIEWS_POLARITY,BIWI_HEAD_POSE,CAMVID,CAMVID_TINY,LSUN_BEDROOMS,PASCAL_2007,PASCAL_2012|}, fname=${2:None}, dest=${3:None}, data=${4|True,False|})"
         ]
     },
     "Vision Imports": {
@@ -101,7 +120,7 @@
         "body": [
             "tfms = get_transforms(do_flip=${1|True,False|}, flip_vert=${2|False,True|}, max_rotate=${3:10.}, max_zoom=${4:1.1},",
             "\tmax_lightning=${5:0.2}, max_warp=${6:0.2}, p_affine=${7:0.75}, p_lightning=${8:0.75})",
-            "path = Path('${TM_DIRECTORY}') / '${9:data'}",
+            "path = Path('${TM_DIRECTORY}') / '${9:data}'",
             "size = ${10:128}",
             "src = (${11|ImageItemList.from_folder(path),ImageSplitDatasets(path)|}\t# grab all files from path",
             "\t.${12|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(df\\, fn_col=0\\, label_col=1)\t# look in df for the filenames in fn_col to get the corresponding label in label_col,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
@@ -128,22 +147,29 @@
             "data.normalize(stats=${13|None,imagenet_stats,cifar_stats,mnist_stats,()|})"
         ]
     },
+    "Vision Arch": {
+        "prefix": "fastai:vision:arch",
+        "description": "Select a model arch",
+        "body": [
+            "${1:arch} = ${2|models.resnet18,models.resnet34,models.resnet50,models.resnet101,models.resnet152,models.squeezenet1_0,models.squeezenet1_1,models.densenet121,models.densenet169,models.densenet201,models.densenet161,models.vgg16_bn,models.vgg19_bn,models.alexnet,models.xresnet18,models.xresnet34,models.xresnet50,models.xresnet101,models.xresnet152,models.xception,models.wrn_22,models.presnet18,models.presnet34,models.presnet50,models.presnet101,models.presnet152|}"
+        ]
+    },
     "Image Classifier": {
         "prefix": "fastai:vision:classifier",
         "description": "Creates an ImageClassifier",
         "body": [
-            "arch = ${1|None,models.resnet18,models.resnet34,models.resnet50,models.resnet101,models.resnet152,models.wrn_22|}",
+            "arch = ${1|None,models.resnet18,models.resnet34,models.resnet50,models.resnet101,models.resnet152,models.squeezenet1_0,models.squeezenet1_1,models.densenet121,models.densenet169,models.densenet201,models.densenet161,models.vgg16_bn,models.vgg19_bn,models.alexnet,models.xresnet18,models.xresnet34,models.xresnet50,models.xresnet101,models.xresnet152,models.xception,models.wrn_22,models.presnet18,models.presnet34,models.presnet50,models.presnet101,models.presnet152|}",
             "custom_head = ${2|None,create_head(num_features\\, num_classes\\, lin_ftrs=None\\, ps=0.5)|}",
             "metrics = ${3|error_rate,accuracy,accuracy_thresh,dice|}",
-            "learn = create_cnn(data, arch=arch, metrics=metrics,cut=None, pretrained=True, lin_ftrs=None, ps=0.5, custom_head=custom_head, split_on=None)"
+            "learn = cnn_learner(data, arch=arch, metrics=metrics,cut=None, pretrained=True, lin_ftrs=None, ps=0.5, custom_head=custom_head, split_on=None)"
         ]
     },
     "ImageClassifier Interpretation": {
         "prefix": "fastai:vision:interpreter",
         "description": "Creates an ImageClassifierInterpreter",
         "body": [
-            "interp = ClassificationInterpretation${1|.from_learner(learn\\, tta=False),(data\\, probs\\, y_true\\, losses)|}",
-            "interp.${2|top_losses(k=None\\, largest=True),plot_top_losses(k\\, largest=True\\, figsize=(12\\,12)),confusion_matrix(),plot_confusion_matrix(normalize=False\\, title'Confusion matrix'\\, cmap='Blues'\\, norm_dec=2),most_confused(min_val=1)|}"
+            "${1:interp} = ClassificationInterpretation${2|.from_learner(learn\\, tta=False),(data\\, probs\\, y_true\\, losses)|}",
+            "${1:interp}.${3|top_losses(k=None\\, largest=True),plot_top_losses(k\\, largest=True\\, figsize=(12\\,12)),confusion_matrix(),plot_confusion_matrix(normalize=False\\, title'Confusion matrix'\\, cmap='Blues'\\, norm_dec=2),most_confused(min_val=1)|}"
         ]
     },
     "Tabular Imports": {
@@ -409,7 +435,7 @@
             "data = ImageDataBunch.from_folder(path, ds_tfms=(rand_pad(2, 28), []), bs=64)",
             "data.normalize(imagenet_stats)",
             "",
-            "learn = create_cnn(data, models.resnet18, metrics=accuracy)",
+            "learn = cnn_learner(data, models.resnet18, metrics=accuracy)",
             "learn.fit_one_cycle(1, 0.01)",
             "",
             "accuracy(*learn.get_preds())"
