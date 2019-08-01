@@ -1,8 +1,8 @@
 # Fastai Code Snippets for VSCode
 
 [![VSMarketplace](https://vsmarketplacebadge.apphb.com/version-short/SBSnippets.fastai-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=SBSnippets.fastai-snippets)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/SBSnippets.pytorch-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=SBSnippets.fastai-snippets)
-[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/SBSnippets.pytorch-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=SBSnippets.fastai-snippets)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/SBSnippets.fastai-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=SBSnippets.fastai-snippets)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/SBSnippets.fastai-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=SBSnippets.fastai-snippets)
 [![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE.md)
 [![GitHub](https://img.shields.io/badge/github-v0.1.0-blue.svg)](https://github.com/SvenBecker/vscode-pytorch/releases)
 
@@ -40,9 +40,6 @@ Currently the snippets are working for the latest releases of the supported libr
 >There might be some functionality which doesn't work yet. I will try to fix it as soon as possible. Furthermore it would be appreciated to inform me about bugs or any other issues.
 
 ## <a name="installation" > </a> Installation
-
->__Warning__:
->I haven't uploaded this project to the vscode marketplace. Will be done soon.
 
 The installation process is very straightforward. The recommend, stable way is as follows:
 
