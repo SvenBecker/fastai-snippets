@@ -20,26 +20,30 @@ Full collection of supported code snippets for the PyTorch and Fastai library. `
 | -------------------------- | ---------------------------------------------------------------------------------- |
 | `fastai:fit→`              | creates a simple fit function                                                      |
 | `fastai:train_2s→`         | creates a two step model training template                                         |
+| `fastai:predict→`          | make a prediction                                                                  |
+| `fastai:validate→`         | validate model                                                                     |
 | `fastai:optimizer→`        | selection of an optimizer (same as in pytorch)                                     |
 | `fastai:metric→`           | creates a template for a custom metric                                             |
 | `fastai:metric_reg→`       | selection of a regression metrics                                                  |
 | `fastai:metric_class→`     | selection of a classification metrics                                              |
 | `fastai:loss_reg→`         | selection of a regression loss function                                            |
 | `fastai:loss_class→`       | selection of a classification loss function                                        |
-| `fastai:metric→`           | creates a template for a custom metric                                             |
+| `fastai:module→`           | loads one of fastais custom modules                                                |
 | `fastai:download-dataset→` | select a data set, load it if not already available and set a path to the data set |
 
 ### <a name="fastai-vision" > </a> Fastai Vision
 
-| Trigger                      | Content                                          |
-| ---------------------------- | ------------------------------------------------ |
-| `fastai:vision:imports→`     | inserts most important imports                   |
-| `fastai:vision:stats→`       | normalization type selection                     |
-| `fastai:vision:transform→`   | selection of image transformations               |
-| `fastai:vision:databunch→`   | creates an ImageDataBunch                        |
-| `fastai:vision:datablock→`   | utilization of the DataBlock for computer vision |
-| `fastai:vision:classifier→`  | creates an ImageClassifier                       |
-| `fastai:vision:interpreter→` | creates an ImageClassifierInterpreter            |
+| Trigger                         | Content                                          |
+| ------------------------------- | ------------------------------------------------ |
+| `fastai:vision:imports→`        | inserts most important imports                   |
+| `fastai:vision:stats→`          | normalization type selection                     |
+| `fastai:vision:load_image→`     | open image from path                             |
+| `fastai:vision:get_transforms→` | image transformation pipeline                    |
+| `fastai:vision:transform→`      | selection of an image transformation             |
+| `fastai:vision:databunch→`      | creates an ImageDataBunch                        |
+| `fastai:vision:datablock→`      | utilization of the DataBlock for computer vision |
+| `fastai:vision:classifier→`     | creates an ImageClassifier                       |
+| `fastai:vision:interpreter→`    | creates an ImageClassifierInterpreter            |
 
 ### <a name="fastai-text" > </a> Fastai Text
 
@@ -66,10 +70,11 @@ Full collection of supported code snippets for the PyTorch and Fastai library. `
 
 ### <a name="fastai-colab" > </a> Fastai Collaborative Filtering
 
-| Trigger                 | Content                                      |
-| ----------------------- | -------------------------------------------- |
-| `fastai:colab:dataset→` | creates a colaborative filtering dataset     |
-| `fastai:colab:learner→` | creates a learner for colaborative filtering |
+| Trigger                   | Content                                      |
+| ------------------------- | -------------------------------------------- |
+| `fastai:colab:imports→`   | inserts most important imports               |
+| `fastai:colab:databunch→` | creates a colaborative filtering databunch   |
+| `fastai:colab:learner→`   | creates a learner for colaborative filtering |
 
 ### <a name="fastai-examples" > </a> Fastai Examples
 

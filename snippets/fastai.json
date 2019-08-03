@@ -32,7 +32,7 @@
         "prefix": "fastai:validate",
         "description": "Make a validation",
         "body": [
-            "${1:learn}.validate(dl=${2:None}, callbacks=${3:None}, metrics=${4:None})"
+            "${1:learn}.validate(dl=${2:None}, callbacks=${3:None}, metrics=[${4|accuracy,accuracy_thresh,op_k_accuracy,dice,error_rate,fbeta,FBeta(average='binary'),Precision(average='binary'),Recall(average='binary'),KappaScore(weights=None),MatthewsCorreff(),AUROC(),mse,mae,msle,psnr,R2Score(),ExplainedVariance(),RMSE(),ExpRMSPE()|}])"
         ]
     },
     "DataBunch": {
@@ -67,7 +67,7 @@
         "prefix": "fastai:loss_class",
         "desription": "Select a classification loss functione",
         "body": [
-            "${1:learn}.loss = ${2|CrossEntropyFlat,nn.BCELoss,nn.BCEWithLogitsLoss,nn.CrossEntropyLoss,nn.MarginRankingLoss,nn.NLLLoss,nn.PoissonNLLLoss,nn.HingeEmbeddingLoss,nn.MultiLabelMarginLoss,nn.SoftMarginLoss,nn.MultiLabelSoftMarginLoss,nn.CosineEmbeddingLoss,nn.MultiMarginLoss,nn.TripletMarginLoss|}()"
+            "${1:learn}.loss = ${2|BCEFlat,BCEWithLogitsFlat,CrossEntropyFlat,nn.BCELoss,nn.BCEWithLogitsLoss,nn.CrossEntropyLoss,nn.MarginRankingLoss,nn.NLLLoss,nn.PoissonNLLLoss,nn.HingeEmbeddingLoss,nn.MultiLabelMarginLoss,nn.SoftMarginLoss,nn.MultiLabelSoftMarginLoss,nn.CosineEmbeddingLoss,nn.MultiMarginLoss,nn.TripletMarginLoss|}()"
         ]
     },
     "Regression Loss": {
@@ -84,11 +84,18 @@
             "optimizer = optim.${1|Adadelta,Adagrad,Adam,SparseAdam,Adamax,ASGD,LBFGS,RMSprop,Rprop,SGD|}"
         ]
     },
+    "Fastai Module": {
+        "prefix": "fastai:module",
+        "desription": "Select a custom fastai module",
+        "body":[
+            "${1|AdaptiveConcatPool2d,Lambda,Flatten,PoolFlatten,Debugger,PixelShuffle_ICNR,MergeLayer,PartialLayer,SigmoidRange,SequentialEx,SelfAttention,BatchNorm1dFlat|}($2)"
+        ]
+    },
     "Download Dataset": {
         "prefix": "fastai:download-dataset",
         "desription": "Select a data set to download or to import, if it is already available",
         "body":[
-            "path = untar_data(URLS.${1|BIWI_SAMPLE,COCO_SAMPLE,COCO_TINY,MNIST_SAMPLE,MNIST_TINY,MNIST_VAR_SIZE_TINY,IMDB,IMDB_SAMPLE,HUMAN_NUMBERS,ADULT_SAMPLE,ML_SAMPLE,PLANET_SAMPLE,PLANET_TINY,IMAGENETTE,IMAGENETTE_160,IMAGENETTE_320,IMAGEWOOF,IMAGEWOOF_160,IMAGEWOOF_320,CIFAR,WT103,DOGS,CALTECH_101,CARS,CIFAR_100,CUB_200_2011,FLOWERS,FOOD,PETS,MNIST,AG_NEWS,AMAZON_REVIEWS,AMAZON_REVIEWS_POLARITY,DBPEDIA,MT_ENG_FRA,SOGOU_NEWS,WIKITEXT,WIKITEXT_TINY,YAHOO_ANSWERS,YELP_REVIEWS,YELP_REVIEWS_POLARITY,BIWI_HEAD_POSE,CAMVID,CAMVID_TINY,LSUN_BEDROOMS,PASCAL_2007,PASCAL_2012|}, fname=${2:None}, dest=${3:None}, data=${4|True,False|})"
+            "path = untar_data(URLS.${1|BIWI_SAMPLE,COCO_SAMPLE,COCO_TINY,MNIST_SAMPLE,MNIST_TINY,MNIST_VAR_SIZE_TINY,IMDB,IMDB_SAMPLE,HUMAN_NUMBERS,ADULT_SAMPLE,ML_SAMPLE,PLANET_SAMPLE,PLANET_TINY,IMAGENETTE,IMAGENETTE_160,IMAGENETTE_320,IMAGEWOOF,IMAGEWOOF_160,IMAGEWOOF_320,CIFAR,WT103,DOGS,CALTECH_101,CARS,CIFAR_100,CUB_200_2011,FLOWERS,FOOD,PETS,MNIST,AG_NEWS,AMAZON_REVIEWS,AMAZON_REVIEWS_POLARITY,DBPEDIA,MT_ENG_FRA,SOGOU_NEWS,WIKITEXT,WIKITEXT_TINY,YAHOO_ANSWERS,YELP_REVIEWS,YELP_REVIEWS_POLARITY,BIWI_HEAD_POSE,CAMVID,CAMVID_TINY,LSUN_BEDROOMS,PASCAL_2007,PASCAL_2012|}, fname=${2:None}, dest=${3:None}, data=${4|True,False|}, force_download=${5|False,True|})"
         ]
     },
     "Vision Imports": {
@@ -99,12 +106,26 @@
             "from fastai.vision import *"
         ]
     },
-    "Image Transform": {
-        "prefix": "fastai:vision:transform",
+    "Load Image": {
+        "prefix": "fastai:vision:load_image",
+        "description": "Load an image from path",
+        "body": [
+            "${1:img} = open_image(${2:'path/to/img'}, div=${3|True,False|}, convert_mode=${4|'RGB','1','L','P','RGBA','CMYK','YCbCr','LAB','HSV','I','F'|})"
+        ]
+    },
+    "Image Transform Pipeline": {
+        "prefix": "fastai:vision:get_transforms",
         "description": "Image transformation pipeline",
         "body": [
             "tfms = get_transforms(do_flip=${1|True,False|}, flip_vert=${2|False,True|}, max_rotate=${3:10.}, max_zoom=${4:1.1},",
-            "\tmax_lightning=${5:0.2}, max_warp=${6:0.2}, p_affine=${7:0.75}, p_lightning=${8:0.75})"
+            "\tmax_lightning=${5:0.2}, max_warp=${6:0.2}, p_affine=${7:0.75}, p_lightning=${8:0.75}, xtra_tfms=${9:None})"
+        ]
+    },
+    "Image Transforms": {
+        "prefix": "fastai:vision:transforms",
+        "description": "Select an image transformation options",
+        "body": [
+            "${1|crop,crop_pad,zoom_crop,rand_resize_crop,brightness,contrast,dihedral,dihedral_affine,flip_lr,flip_affine,jitter,pad,perspective_warp,resize,rotate,rgb_randomize,skew,squish,symmetric_warp,tilt,zoom,cutout,rand_crop,rand_pad,rand_zoom|}($2)"
         ]
     },
     "Image Normalize Stats": {
@@ -120,7 +141,7 @@
         "body": [
             "tfms = get_transforms(do_flip=${1|True,False|}, flip_vert=${2|False,True|}, max_rotate=${3:10.}, max_zoom=${4:1.1},",
             "\tmax_lightning=${5:0.2}, max_warp=${6:0.2}, p_affine=${7:0.75}, p_lightning=${8:0.75})",
-            "path = Path('${TM_DIRECTORY}') / '${9:data}'",
+            "path = Path('${TM_DIRECTORY}') / '${9:data}')",
             "size = ${10:128}",
             "src = (${11|ImageItemList.from_folder(path),ImageSplitDatasets(path)|}\t# grab all files from path",
             "\t.${12|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(df\\, fn_col=0\\, label_col=1)\t# look in df for the filenames in fn_col to get the corresponding label in label_col,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
@@ -160,8 +181,8 @@
         "body": [
             "arch = ${1|None,models.resnet18,models.resnet34,models.resnet50,models.resnet101,models.resnet152,models.squeezenet1_0,models.squeezenet1_1,models.densenet121,models.densenet169,models.densenet201,models.densenet161,models.vgg16_bn,models.vgg19_bn,models.alexnet,models.xresnet18,models.xresnet34,models.xresnet50,models.xresnet101,models.xresnet152,models.xception,models.wrn_22,models.presnet18,models.presnet34,models.presnet50,models.presnet101,models.presnet152|}",
             "custom_head = ${2|None,create_head(num_features\\, num_classes\\, lin_ftrs=None\\, ps=0.5)|}",
-            "metrics = ${3|error_rate,accuracy,accuracy_thresh,dice|}",
-            "learn = cnn_learner(data, arch=arch, metrics=metrics,cut=None, pretrained=True, lin_ftrs=None, ps=0.5, custom_head=custom_head, split_on=None)"
+            "metrics = ${3|accuracy,accuracy_thresh,op_k_accuracy,dice,error_rate,fbeta,FBeta(average='binary'),Precision(average='binary'),Recall(average='binary'),KappaScore(weights=None),MatthewsCorreff(),AUROC()|}",
+            "learn = cnn_learner(${4:data}, arch=arch, metrics=[metrics],cut=None, pretrained=${5|True,False|}, lin_ftrs=None, ps=0.5, custom_head=custom_head, split_on=None)"
         ]
     },
     "ImageClassifier Interpretation": {
@@ -184,13 +205,13 @@
         "prefix": "fastai:tabular:datablock",
         "description": "Creates a DataBlock for tabular/structured data",
         "body": [
-            "path = Path('${TM_DIRECTORY}') / '${1:data'}",
+            "path = Path('${TM_DIRECTORY}') / '${1:data'})",
             "cat_names = [$2]",
             "cont_names = [$3]",
             "procs = [FillMissing, Categorify, Normalize]",
             "",
             "data = (TabularList.from_df(${4:df}, path=path, cat_names=cat_names, cont_names=cont_names, procs=procs)",
-            "\t.${5|split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|}",
+            "\t.${5|split_by_folder(random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|}",
             "\t.label_from(cols=dep_var)",
             "\t${6| ,.add_test(test\\, label=0))\t# add test set containing items from test and an arbitrary label|}",
             "\t.databunch(bs=${7:32})",
@@ -209,7 +230,7 @@
         "prefix": "fastai:tabular:learner",
         "description": "Creates a learner for tabular data",
         "body": [
-            "learn = tabular_learner(${1:data}, layers=${2:2}, metrics=${3|error_rate,accuracy,accuracy_thresh,dice,exp_rmspe,fbeta|})"
+            "learn = tabular_learner(${1:data}, layers=${2:2}, emb_szs=${3:None}, metrics=[${4|accuracy,accuracy_thresh,op_k_accuracy,dice,error_rate,fbeta,FBeta(average='binary'),Precision(average='binary'),Recall(average='binary'),KappaScore(weights=None),MatthewsCorreff(),AUROC(),mse,mae,msle,psnr,R2Score(),ExplainedVariance(),RMSE(),ExpRMSPE()|}])"
         ]
     },
     "Text Imports": {
@@ -240,7 +261,7 @@
         "prefix": "fastai:text:datablock",
         "description": "Creates a DataBlock for NLP",
         "body": [
-            "path = Path('${TM_DIRECTORY}') / '${1:data'}",
+            "path = Path('${TM_DIRECTORY}') / '${1:data'})",
             "data = (TextFileList.from_folder(path)\t# grap all the text files in path",
             "\t.${2|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(df\\, fn_col=0\\, label_col=1)\t# look in df for the filenames in fn_col to get the corresponding label in label_col,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
             "\t.${3|split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder (train or valid) in which the filenames are,random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|})",
@@ -257,7 +278,7 @@
         "prefix": "fastai:text:datablock-lm",
         "description": "Creates a DataBlock for NLP",
         "body": [
-            "path = Path('${TM_DIRECTORY}') / '${1:data'}",
+            "path = Path('${TM_DIRECTORY}') / '${1:data'})",
             "data_lm = (TextFileList.from_folder(path)\t# grap all the text files in path",
             "\t.${2|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(df\\, fn_col=0\\, label_col=1)\t# look in df for the filenames in fn_col to get the corresponding label in label_col,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
             "\t.${3|split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|})",
@@ -274,7 +295,7 @@
         "prefix": "fastai:text:datablock-clas",
         "description": "Creates a DataBlock for NLP",
         "body": [
-            "path = Path('${TM_DIRECTORY}') / '${1:data'}",
+            "path = Path('${TM_DIRECTORY}') / '${1:data'})",
             "data_clas = (TextFileList.from_folder(path)\t# grap all the text files in path",
             "\t.${2|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(df\\, fn_col=0\\, label_col=1)\t# look in df for the filenames in fn_col to get the corresponding label in label_col,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
             "\t.${3|split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|})",
@@ -308,18 +329,26 @@
             "learn = text_classifier_learner(${1:data}, bptt=${2:70}, emb_sz=${3:400}, nh=${4:1150}, nl=${5:3})"
         ]
     },
-    "Collaborative Filtering Dataset": {
-        "prefix": "fastai:colab:dataset",
-        "description": "Creates a dataset for collaborative filtering",
+    "Collaborative Filtering Imports": {
+        "prefix": "fastai:colab:imports",
+        "description": "Imports for colab filtering",
         "body": [
-            "datasets = CollabFilteringDataset${1|(user\\, item\\, ratings),.from_df(rating_df\\, pct_valt=0.2\\, user_name=None\\, item_name=None\\, rating_name=None),.from_csv(csv_name)|}"
+            "from fastai import *",
+            "from fastai.colab import *"
+        ]
+    },
+    "Collaborative Filtering Databunch": {
+        "prefix": "fastai:colab:databunch",
+        "description": "Creates a databunch for collaborative filtering",
+        "body": [
+            "data = CollabDataBunch.from_df(${1:ratings}, valid_pct=${2:0.2}, user_name=${3:None}, item_name=${4:None}, rating_name=${5:None}, test=${6:None}, bs=${7:64})"
         ]
     },
     "Collaborative Filtering Learner": {
         "prefix": "fastai:colab:learner",
         "description": "Creates a learner for collaborative filtering",
         "body": [
-            "learn = get_collab_learner(${1:ratings}, n_factors=${2:n_factors}, user_name=${3:None}, item_name=${4:None}, rating_name=${5:None}, pct_val=0.2, test=None, metrics=None, min_score=None, max_score=None)"
+            "learn = collab_learner(${1:data}, n_factors=${2:None}, use_nn=${3|False,True|}, emb_szs=${4:None}, layers=${5:None})"
         ]
     },
     "Cifar Example": {
@@ -352,30 +381,11 @@
             "from fastai.collab import *   # Quick access to collab filtering functionality",
             "",
             "path = untar_data(URLs.ML_SAMPLE)",
-            "ratings = pd.read_csv(path/'ratings.csv')",
-            "series2cat(ratings, 'userId', 'movieId')",
+            "ratings = pd.read_csv(path / 'ratings.csv')",
+            "data = CollabDataBunch.from_df(ratings)",
             "",
-            "learn = get_collab_learner(ratings, n_factors=50, min_score=0., max_score=5.)",
-            "learn.fit_one_cycle(4, 5e-3)"
-        ]
-    },
-    "Dogs-Cats Example": {
-        "prefix": "fastai:examples:dogs-cats",
-        "description": "Dogs-cats code example",
-        "body": [
-            "from fastai import *",
-            "from fastai.vision import *",
-            "",
-            "path = untar_data(URLs.DOGS)",
-            "data = ImageDataBunch.from_folder(path, ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)",
-            "",
-            "learn = create_cnn(data, models.resnet34, metrics=accuracy)",
-            "learn.fit_one_cycle(1)",
-            "",
-            "learn.unfreeze()",
-            "learn.fit_one_cycle(6, slice(1e-5,3e-4), pct_start=0.05)",
-            "",
-            "accuracy(*learn.TTA())"
+            "learn = collab_learner(data, n_factors=50, y_range=(0.,5.))",
+            "learn.fit_one_cycle(5, 5e-3, wd=0.1)"
         ]
     },
     "Adult Example": {
@@ -387,15 +397,17 @@
             "",
             "path = untar_data(URLs.ADULT_SAMPLE)",
             "df = pd.read_csv(path/'adult.csv')",
-            "train_df, valid_df = df[:-2000].copy(),df[-2000:].copy()",
+            "procs = [FillMissing, Categorify, Normalize]",
+            "valid_idx = range(len(df)-2000, len(df))",
             "",
-            "dep_var = '>=50k'",
+            "dep_var = 'salary'",
             "cat_names = ['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']",
-            "data = TabularDataBunch.from_df(path, train_df, valid_df, dep_var,",
-            "\t\t\t\t\t\t\t\ttfms=[FillMissing, Categorify], cat_names=cat_names)",
+            "data = TabularDataBunch.from_df(path, df, dep_var, valid_idx=valid_idx, procs=procs, cat_names=cat_names)",
             "",
-            "learn = get_tabular_learner(data, layers=[200,100], metrics=accuracy)",
-            "learn.fit(1, 1e-2)"
+            "learn = tabular_learner(data, layers=[200,100], emb_szs={'native-country': 10}, metrics=accuracy)",
+            "learn.fit(1, 1e-2)",
+            "",
+            "learn.predict(df.iloc[0])"
         ]
     },
     "Imdb Example": {
@@ -406,39 +418,35 @@
             "from fastai.text import *   # Quick access to NLP functionality",
             "",
             "path = untar_data(URLs.IMDB_SAMPLE)",
-            "df = pd.read_csv(path/'texts.csv', header=None)",
+            "df = pd.read_csv(path/'texts.csv')",
             "",
             "data_lm = TextLMDataBunch.from_csv(path, 'texts.csv')",
-            "data_clas = TextClasDataBunch.from_csv(path, 'texts.csv', vocab=data_lm.train_ds.vocab, bs=42)",
+            "data_clas = TextClasDataBunch.from_csv(path, 'texts.csv', vocab=data_lm.train_ds.vocab, bs=32)",
             "",
-            "learn = language_model_learner(data_lm, pretrained_model=URLs.WT103)",
+            "learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.5)",
+            "learn.fit_one_cycle(1, 1e-2)",
+            "",
             "learn.unfreeze()",
-            "learn.fit(2, slice(1e-4,1e-2))",
+            "learn.fit(1, 1e-3)",
             "",
-            "learn.save_encoder('enc')",
+            "learn.save_encoder('ft_enc')",
             "",
-            "learn = text_classifier_learner(data_clas)",
-            "learn.load_encoder('enc')",
-            "learn.fit(3, 1e-3)"
+            "learn = text_classifier_learner(data_clas, AWD_LSTM, drop_mult=0.5)",
+            "learn.fit(1, 1e-2)"
         ]
     },
     "Mnist Example": {
         "prefix": "fastai:examples:mnist",
         "description": "Mnist code example",
         "body": [
-            "",
-            "import fastai",
             "from fastai import *          # Quick access to most common functionality",
             "from fastai.vision import *   # Quick access to computer vision functionality",
             "",
             "path = untar_data(URLs.MNIST_SAMPLE)",
-            "data = ImageDataBunch.from_folder(path, ds_tfms=(rand_pad(2, 28), []), bs=64)",
-            "data.normalize(imagenet_stats)",
+            "data = ImageDataBunch.from_folder(path)",
             "",
             "learn = cnn_learner(data, models.resnet18, metrics=accuracy)",
-            "learn.fit_one_cycle(1, 0.01)",
-            "",
-            "accuracy(*learn.get_preds())"
+            "learn.fit_one_cycle(1)"
         ]
     }
 }

@@ -4,10 +4,10 @@
 [![Installs](https://vsmarketplacebadge.apphb.com/installs/SBSnippets.fastai-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=SBSnippets.fastai-snippets)
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/SBSnippets.fastai-snippets.svg)](https://marketplace.visualstudio.com/items?itemName=SBSnippets.fastai-snippets)
 [![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE.md)
-[![GitHub](https://img.shields.io/badge/github-v0.1.0-blue.svg)](https://github.com/SvenBecker/vscode-pytorch/releases)
+[![GitHub](https://img.shields.io/badge/github-v0.1.1-blue.svg)](https://github.com/SvenBecker/vscode-pytorch/releases)
 
 This project aims to provide a faster workflow when using the [fastai](https://github.com/fastai/fastai) library in [Visual Studio Code](https://code.visualstudio.com/).
-This extension provides code snippets for often used coding blocks as well as code example provided by the official fastai docs for common deep learning tasks.
+This extension provides code snippets for often used coding blocks as well as code example provided by the [official fastai docs](https://docs.fast.ai/) for common deep learning tasks.
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ This extension provides code snippets for often used coding blocks as well as co
 
 ## <a name="usage" > </a> Getting Started
 
-If this extension is installed and activated you might notice by start typing `pytorch` or `fastai` in your python file a dropdown list appears. Entries starting with `pytorch:` or `fastai:` represent code snippets refering to those libraries offered by this extension.
+If this extension is installed and activated you might notice by start typing `pytorch` or `fastai` in your python file a dropdown list appears. Entries starting with `fastai:` represent code snippets refering to those libraries offered by this extension.
 Snippets appear in the same way as code completion by using `Ctrl+Space`. There are _placeholders_, _variables_ and _choices_ defined inside the code snippets so you can jump from one to another just by pressing `Tab`. Examples on how to use this extension are shown below. For a full overview please take a look at the [Snippet Collection](COLLECTIONS.md).
 
 ![Fastai Preview](images/preview_fastai.gif)
@@ -65,6 +65,28 @@ On Windows for example you can normally find the extension folder at `C:\Users\Y
 
 ## <a name="changelog" > </a> Changelog
 
+#### Version 0.1.1:
+
+##### Added
+
+- Added a couple more options to the already existing snippets
+- `fastai:modules` and `fastai:vision:load_image`
+
+##### Changed
+
+- Renamed `fastai:vision:transforms` to `fastai:vision:get_transforms`
+- `fastai:vision:transform` does now select an individual transformation method
+- Major change to colab filtering snippets `fastai:colab:`
+- Updated `fastai:examples`
+
+##### Fixed
+
+- Added closing bracket when calling path on many datablock snippets
+
+##### Removed
+
+- Removed dogs vs cats example `fastai:examples:dogs-cats`
+
 #### Version 0.1.0:
 
 ##### Added
@@ -88,5 +110,5 @@ Suggestions for improvements will be highly appreciated. You can write me an ema
 
 ## <a name="credits" > </a> Credits
 
-* [Fastai](https://www.fast.ai/): Also a huge thanks to Jeremy Howard and the whole fast.ai team for creating this great deep learning library and also for offering wonderful, very practical orientated free lectures giving insight to deep learning to a wide range of people including ml/dl beginners as well as advanced practitioners.
+* [Fast.ai](https://www.fast.ai/): Also a huge thanks to Jeremy Howard and the whole fast.ai team for creating this great deep learning library and also for offering wonderful, very practical orientated free lectures giving insight to deep learning to a wide range of people including ml/dl beginners as well as advanced practitioners.
 * [VSCode](https://code.visualstudio.com/): My personal favorite text editor and I'm grateful for all the options they are offering, like a huge amount of language support, extensions, integrated terminal, debugger etc..
