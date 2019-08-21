@@ -95,14 +95,13 @@
         "prefix": "fastai:download-dataset",
         "desription": "Select a data set to download or to import, if it is already available",
         "body":[
-            "path = untar_data(URLS.${1|BIWI_SAMPLE,COCO_SAMPLE,COCO_TINY,MNIST_SAMPLE,MNIST_TINY,MNIST_VAR_SIZE_TINY,IMDB,IMDB_SAMPLE,HUMAN_NUMBERS,ADULT_SAMPLE,ML_SAMPLE,PLANET_SAMPLE,PLANET_TINY,IMAGENETTE,IMAGENETTE_160,IMAGENETTE_320,IMAGEWOOF,IMAGEWOOF_160,IMAGEWOOF_320,CIFAR,WT103,DOGS,CALTECH_101,CARS,CIFAR_100,CUB_200_2011,FLOWERS,FOOD,PETS,MNIST,AG_NEWS,AMAZON_REVIEWS,AMAZON_REVIEWS_POLARITY,DBPEDIA,MT_ENG_FRA,SOGOU_NEWS,WIKITEXT,WIKITEXT_TINY,YAHOO_ANSWERS,YELP_REVIEWS,YELP_REVIEWS_POLARITY,BIWI_HEAD_POSE,CAMVID,CAMVID_TINY,LSUN_BEDROOMS,PASCAL_2007,PASCAL_2012|}, fname=${2:None}, dest=${3:None}, data=${4|True,False|}, force_download=${5|False,True|})"
+            "path = untar_data(URLs.${1|BIWI_SAMPLE,COCO_SAMPLE,COCO_TINY,MNIST_SAMPLE,MNIST_TINY,MNIST_VAR_SIZE_TINY,IMDB,IMDB_SAMPLE,HUMAN_NUMBERS,ADULT_SAMPLE,ML_SAMPLE,PLANET_SAMPLE,PLANET_TINY,IMAGENETTE,IMAGENETTE_160,IMAGENETTE_320,IMAGEWOOF,IMAGEWOOF_160,IMAGEWOOF_320,CIFAR,WT103,DOGS,CALTECH_101,CARS,CIFAR_100,CUB_200_2011,FLOWERS,FOOD,PETS,MNIST,AG_NEWS,AMAZON_REVIEWS,AMAZON_REVIEWS_POLARITY,DBPEDIA,MT_ENG_FRA,SOGOU_NEWS,WIKITEXT,WIKITEXT_TINY,YAHOO_ANSWERS,YELP_REVIEWS,YELP_REVIEWS_POLARITY,BIWI_HEAD_POSE,CAMVID,CAMVID_TINY,LSUN_BEDROOMS,PASCAL_2007,PASCAL_2012|}, fname=${2:None}, dest=${3:None}, data=${4|True,False|}, force_download=${5|False,True|})"
         ]
     },
     "Vision Imports": {
         "prefix": "fastai:vision:imports",
         "description": "Imports the packages which are most required for computer vision tasks",
         "body": [
-            "from fastai import *",
             "from fastai.vision import *"
         ]
     },
@@ -144,8 +143,8 @@
             "path = Path('${TM_DIRECTORY}') / '${9:data}')",
             "size = ${10:128}",
             "src = (${11|ImageItemList.from_folder(path),ImageSplitDatasets(path)|}\t# grab all files from path",
-            "\t.${12|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(df\\, fn_col=0\\, label_col=1)\t# look in df for the filenames in fn_col to get the corresponding label in label_col,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
-            "\t.${13|split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|}",
+            "\t.${12|label_const(const=0)\t# label every item with const,label_empty()\t# label every item with empty label,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(cols=1)\t# label selt.item from the values in cols in self.inner_df,label_from_func(func)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
+            "\t.${13|split_none()\t# don't split the data and create an empty validation set,split_by_list(train\\, valid)\t# split the data between train and valid,split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,split_by_random_pct(valid_pct=0.2\\, seed=None)\t# split the items randomly by putting valid_pct in the validation set,split_subsets(train_size\\, valid_size)\t# split items into train set with size trainsize * n and valid size * n,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname, path=None)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_idxs(train_idx\\, valid_idx)\t# split the data between train_idx and valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set),split_from_df(col=2)\t# split the data from col in the dataframe in self._inner_df|}",
             "\t${14|),.add_test(test\\, label=None))\t# add test set containing items from test and an arbitrary label|}",
             "data = (src.datasets(${15|ImageClassificationDataset,ImageMultiDataset,SegmentationDataset,PointsDataset,ObjectDataset|})\t# create datasets from the underlying data using dataset_cls and passing along the kwargs",
             "\t.transform(tfms, size=size, tfm_y=${16|False,True|})",
@@ -197,7 +196,6 @@
         "prefix": "fastai:tabular:imports",
         "description": "Adds most important imports for tabular data tasks",
         "body": [
-            "from fastai import *",
             "from fastai.tabular import *"
         ]
     },
@@ -210,11 +208,11 @@
             "cont_names = [$3]",
             "procs = [FillMissing, Categorify, Normalize]",
             "",
-            "data = (TabularList.from_df(${4:df}, path=path, cat_names=cat_names, cont_names=cont_names, procs=procs)",
-            "\t.${5|split_by_folder(random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|}",
-            "\t.label_from(cols=dep_var)",
-            "\t${6| ,.add_test(test\\, label=0))\t# add test set containing items from test and an arbitrary label|}",
-            "\t.databunch(bs=${7:32})",
+            "data = (TabularList.from_df(${4:df}, cat_names=cat_names, cont_names=cont_names, procs=procs)",
+            "\t.${5|split_none()\t# don't split the data and create an empty validation set,split_by_list(train\\, valid)\t# split the data between train and valid,split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,split_by_random_pct(valid_pct=0.2\\, seed=None)\t# split the items randomly by putting valid_pct in the validation set,split_subsets(train_size\\, valid_size)\t# split items into train set with size trainsize * n and valid size * n,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname, path=None)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_idxs(train_idx\\, valid_idx)\t# split the data between train_idx and valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set),split_from_df(col=2)\t# split the data from col in the dataframe in self._inner_df|}",
+            "\t.${6|label_from_df(cols=dep_var),label_empty(),label_const(const=0)|}",
+            "\t${7| ,.add_test(items=test\\, label=None))\t# add test set containing items with an arbitrary label|}",
+            "\t.databunch(bs=${8:64})",
             "data.save('tmp_data')"
         ]
     },
@@ -223,21 +221,20 @@
         "description": "Creates a DataBuch for tabular data",
         "body": [
             "path = Path('${TM_DIRECTORY}') / '${1:data}'",
-            "data = TabularDataBunch.from_df(path, ${2:train_df}, ${3:valid_df}, ${4:dep_var}, test_df=None, tfms=None, cat_names=None, cont_names=None, stats=None, log_output=False)"
+            "data = TabularDataBunch.from_df(path, df=${2:train_df}, dep_var=${3:dep_var}, valid_idx=${4:valid_idxs}, procs=${5:procs}, cat_names=${6:None}, cont_names=${7:None}, test_df=${8:None}, bs=${9:64})"
         ]
     },
     "Tabular Learner": {
         "prefix": "fastai:tabular:learner",
         "description": "Creates a learner for tabular data",
         "body": [
-            "learn = tabular_learner(${1:data}, layers=${2:2}, emb_szs=${3:None}, metrics=[${4|accuracy,accuracy_thresh,op_k_accuracy,dice,error_rate,fbeta,FBeta(average='binary'),Precision(average='binary'),Recall(average='binary'),KappaScore(weights=None),MatthewsCorreff(),AUROC(),mse,mae,msle,psnr,R2Score(),ExplainedVariance(),RMSE(),ExpRMSPE()|}])"
+            "learn = tabular_learner(data=${1:data}, layers=${2:2}, emb_szs=${3:None}, metrics=[${4|accuracy,accuracy_thresh,op_k_accuracy,dice,error_rate,fbeta,FBeta(average='binary'),Precision(average='binary'),Recall(average='binary'),KappaScore(weights=None),MatthewsCorreff(),AUROC(),mse,mae,msle,psnr,R2Score(),ExplainedVariance(),RMSE(),ExpRMSPE()|}])"
         ]
     },
     "Text Imports": {
         "prefix": "fastai:text:imports",
         "description": "Adds most important imports for the fastai NLP tasks",
         "body": [
-            "from fastai import *",
             "from fastai.text import *"
         ]
     },
@@ -263,8 +260,8 @@
         "body": [
             "path = Path('${TM_DIRECTORY}') / '${1:data'})",
             "data = (TextFileList.from_folder(path)\t# grap all the text files in path",
-            "\t.${2|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(df\\, fn_col=0\\, label_col=1)\t# look in df for the filenames in fn_col to get the corresponding label in label_col,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
-            "\t.${3|split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder (train or valid) in which the filenames are,random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|})",
+            "\t.${2|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder()\t# give a label to each filename depending on its folder,label_from_df(cols=1)\t# label self.items from the values in cols in self.inner_df,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
+            "\t.${3|split_none()\t# don't split the data and create an empty validation set,split_by_list(train\\, valid)\t# split the data between train and valid,split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,split_by_random_pct(valid_pct=0.2\\, seed=None)\t# split the items randomly by putting valid_pct in the validation set,split_subsets(train_size\\, valid_size)\t# split items into train set with size trainsize * n and valid size * n,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname, path=None)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_idxs(train_idx\\, valid_idx)\t# split the data between train_idx and valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set),split_from_df(col=2)\t# split the data from col in the dataframe in self._inner_df|})",
             "\t${4| ,.add_test_folder(test_folder='test'\\, label=None)\t# add test set containing items from test and an arbitrary label|}",
             "\t.datasets()\t# use TextDataset",
             "\t.tokenize(tokenizer=${5:None})\t# if None tokenize with defaults from fastai",
@@ -281,7 +278,7 @@
             "path = Path('${TM_DIRECTORY}') / '${1:data'})",
             "data_lm = (TextFileList.from_folder(path)\t# grap all the text files in path",
             "\t.${2|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(df\\, fn_col=0\\, label_col=1)\t# look in df for the filenames in fn_col to get the corresponding label in label_col,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
-            "\t.${3|split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|})",
+            "\t.${3|split_none()\t# don't split the data and create an empty validation set,split_by_list(train\\, valid)\t# split the data between train and valid,split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,split_by_random_pct(valid_pct=0.2\\, seed=None)\t# split the items randomly by putting valid_pct in the validation set,split_subsets(train_size\\, valid_size)\t# split items into train set with size trainsize * n and valid size * n,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname, path=None)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_idxs(train_idx\\, valid_idx)\t# split the data between train_idx and valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set),split_from_df(col=2)\t# split the data from col in the dataframe in self._inner_df|})",
             "\t${4| ,.add_test_folder(test_folder='test'\\, label=None)\t# add test set containing items from test and an arbitrary label|}",
             "\t.datasets()\t# use TextDataset",
             "\t.tokenize(tokenizer=${5:None})\t# if None tokenize with defaults from fastai",
@@ -298,7 +295,7 @@
             "path = Path('${TM_DIRECTORY}') / '${1:data'})",
             "data_clas = (TextFileList.from_folder(path)\t# grap all the text files in path",
             "\t.${2|label_const(const=0)\t# label every item with const,label_from_csv(csv_fnames\\, fn_col=0\\, label_col=1\\, header='infer')\t# look in self.path/csv_fname for a csv loaded with an optional header containing the filenames in fn_col to get the corresponding label in label_col,label_from_folder(classes=None)\t# give a label to each filename depending on its folder,label_from_df(df\\, fn_col=0\\, label_col=1)\t# look in df for the filenames in fn_col to get the corresponding label in label_col,label_from_func(get_y_fn)\t# apply func to every input to get its label,label_from_re(pat\\, full_path=False)\t# apply the re in pat to determine the label of every filename|}",
-            "\t.${3|split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,random_split_by_pct(valid_pct=0.2)\t# split the items randomly by putting valid_pct in the validation set,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set)|})",
+            "\t.${3|split_none()\t# don't split the data and create an empty validation set,split_by_list(train\\, valid)\t# split the data between train and valid,split_by_folder(train='train'\\, valid='valid')\t# split the data depending on the folder in which the filenames are,split_by_random_pct(valid_pct=0.2\\, seed=None)\t# split the items randomly by putting valid_pct in the validation set,split_subsets(train_size\\, valid_size)\t# split items into train set with size trainsize * n and valid size * n,split_by_files(valid_names)\t# split the data by using the names in valid_names for validation,split_by_fname_file(fname, path=None)\t# split the data by using the file names in fname for the validation set,split_by_idx(valid_idx)\t# split the data according to the indexes in valid_idx,split_by_idxs(train_idx\\, valid_idx)\t# split the data between train_idx and valid_idx,split_by_valid_func(func)\t# split the data by result of func (which returns True for validation set),split_from_df(col=2)\t# split the data from col in the dataframe in self._inner_df|})",
             "\t${4| ,.add_test_folder(test_folder='test'\\, label=None)\t# add test set containing items from test and an arbitrary label|}",
             "\t.datasets()\t# use TextDataset",
             "\t.tokenize(tokenizer=${5:None})\t# if None tokenize with defaults from fastai",
@@ -333,7 +330,6 @@
         "prefix": "fastai:colab:imports",
         "description": "Imports for colab filtering",
         "body": [
-            "from fastai import *",
             "from fastai.colab import *"
         ]
     },
@@ -355,8 +351,8 @@
         "prefix": "fastai:examples:cifar",
         "description": "Cifar code example",
         "body": [
-            "from fastai import *",
             "from fastai.vision import *",
+            "from fastai.datasets import *",
             "from fastai.vision.models.wrn import wrn_22",
             "",
             "torch.backends.cudnn.benchmark = True",
@@ -377,8 +373,8 @@
         "prefix": "fastai:examples:colab",
         "description": "Colaborative filtering code example",
         "body": [
-            "from fastai import *          # Quick access to most common functionality",
             "from fastai.collab import *   # Quick access to collab filtering functionality",
+            "from fastai.datasets import *",
             "",
             "path = untar_data(URLs.ML_SAMPLE)",
             "ratings = pd.read_csv(path / 'ratings.csv')",
@@ -392,8 +388,8 @@
         "prefix": "fastai:examples:adult",
         "description": "Adult code example",
         "body": [
-            "from fastai import *          # Quick access to most common functionality",
             "from fastai.tabular import *  # Quick access to tabular functionality",
+            "from fastai.datasets import *",
             "",
             "path = untar_data(URLs.ADULT_SAMPLE)",
             "df = pd.read_csv(path/'adult.csv')",
@@ -414,8 +410,8 @@
         "prefix": "fastai:examples:imdb",
         "description": "Imdb code example",
         "body": [
-            "from fastai import *        # Quick access to most common functionality",
             "from fastai.text import *   # Quick access to NLP functionality",
+            "from fastai.datasets import *",
             "",
             "path = untar_data(URLs.IMDB_SAMPLE)",
             "df = pd.read_csv(path/'texts.csv')",
@@ -439,8 +435,8 @@
         "prefix": "fastai:examples:mnist",
         "description": "Mnist code example",
         "body": [
-            "from fastai import *          # Quick access to most common functionality",
             "from fastai.vision import *   # Quick access to computer vision functionality",
+            "from fastai.datasets import *",
             "",
             "path = untar_data(URLs.MNIST_SAMPLE)",
             "data = ImageDataBunch.from_folder(path)",
